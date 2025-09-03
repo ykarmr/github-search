@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import { cache } from "react";
 
 import {
   Repository,
@@ -33,113 +34,110 @@ class GitHubApiError extends Error implements ApiError {
 }
 
 // リポジトリ検索
-export async function searchRepositories(
-  params: SearchParams,
-): Promise<SearchRepositoriesResponse> {
-  try {
-    const response = await octokit.rest.search.repos({
-      q: params.q,
-      sort: params.sort || "stars",
-      order: params.order || "desc",
-      // eslint-disable-next-line camelcase
-      per_page: params.per_page || 30,
-      page: params.page || 1,
-    });
+export const searchRepositories = cache(
+  async (params: SearchParams): Promise<SearchRepositoriesResponse> => {
+    try {
+      const response = await octokit.rest.search.repos({
+        q: params.q,
+        sort: params.sort || "stars",
+        order: params.order || "desc",
+        // eslint-disable-next-line camelcase
+        per_page: params.per_page || 30,
+        page: params.page || 1,
+      });
 
-    // 型を適合させるため、必要に応じて変換
-    const transformedData: SearchRepositoriesResponse = {
-      // eslint-disable-next-line camelcase
-      total_count: response.data.total_count,
-      // eslint-disable-next-line camelcase
-      incomplete_results: response.data.incomplete_results,
-      items: response.data.items.map((item) => {
-        return {
-          ...item,
-          topics: item.topics || [],
-        };
-      }) as Repository[],
-    };
+      // 型を適合させるため、必要に応じて変換
+      const transformedData: SearchRepositoriesResponse = {
+        // eslint-disable-next-line camelcase
+        total_count: response.data.total_count,
+        // eslint-disable-next-line camelcase
+        incomplete_results: response.data.incomplete_results,
+        items: response.data.items.map((item) => {
+          return {
+            ...item,
+            topics: item.topics || [],
+          };
+        }) as Repository[],
+      };
 
-    return transformedData;
-  } catch (error: any) {
-    throw new GitHubApiError(
-      error.message || "Repository search failed",
-      error.status,
-      error.documentation_url,
-    );
-  }
-}
+      return transformedData;
+    } catch (error: any) {
+      throw new GitHubApiError(
+        error.message || "Repository search failed",
+        error.status,
+        error.documentation_url,
+      );
+    }
+  },
+);
 
 // 単一リポジトリの詳細取得
-export async function getRepository(
-  owner: string,
-  repo: string,
-): Promise<Repository> {
-  try {
-    const response = await octokit.rest.repos.get({
-      owner,
-      repo,
-    });
+export const getRepository = cache(
+  async (owner: string, repo: string): Promise<Repository> => {
+    try {
+      const response = await octokit.rest.repos.get({
+        owner,
+        repo,
+      });
 
-    // 型を適合させるため、必要に応じて変換
-    const transformedData = {
-      ...response.data,
-      topics: response.data.topics || [],
-    } as Repository;
+      // 型を適合させるため、必要に応じて変換
+      const transformedData = {
+        ...response.data,
+        topics: response.data.topics || [],
+      } as Repository;
 
-    return transformedData;
-  } catch (error: any) {
-    throw new GitHubApiError(
-      error.message || "Failed to get repository",
-      error.status,
-      error.documentation_url,
-    );
-  }
-}
+      return transformedData;
+    } catch (error: any) {
+      throw new GitHubApiError(
+        error.message || "Failed to get repository",
+        error.status,
+        error.documentation_url,
+      );
+    }
+  },
+);
 
 // リポジトリの言語統計取得
-export async function getRepositoryLanguages(
-  owner: string,
-  repo: string,
-): Promise<LanguageStats> {
-  try {
-    const response = await octokit.rest.repos.listLanguages({
-      owner,
-      repo,
-    });
+export const getRepositoryLanguages = cache(
+  async (owner: string, repo: string): Promise<LanguageStats> => {
+    try {
+      const response = await octokit.rest.repos.listLanguages({
+        owner,
+        repo,
+      });
 
-    return response.data;
-  } catch (error: any) {
-    throw new GitHubApiError(
-      error.message || "Failed to get repository languages",
-      error.status,
-      error.documentation_url,
-    );
-  }
-}
+      return response.data;
+    } catch (error: any) {
+      throw new GitHubApiError(
+        error.message || "Failed to get repository languages",
+        error.status,
+        error.documentation_url,
+      );
+    }
+  },
+);
 
 // リポジトリの最新コミット取得
-export async function getLatestCommit(
-  owner: string,
-  repo: string,
-): Promise<LatestCommit[]> {
-  try {
-    const response = await octokit.rest.repos.listCommits({
-      owner,
-      repo,
-      // eslint-disable-next-line camelcase
-      per_page: 1,
-    });
+export const getLatestCommit = cache(
+  async (owner: string, repo: string): Promise<LatestCommit[]> => {
+    try {
+      const response = await octokit.rest.repos.listCommits({
+        owner,
+        repo,
+        // eslint-disable-next-line camelcase
+        per_page: 1,
+      });
 
-    return response.data as LatestCommit[];
-  } catch (error: any) {
-    throw new GitHubApiError(
-      error.message || "Failed to get latest commit",
-      error.status,
-      error.documentation_url,
-    );
-  }
-}
+      return response.data as LatestCommit[];
+    } catch (error: any) {
+      throw new GitHubApiError(
+        error.message || "Failed to get latest commit",
+        error.status,
+        error.documentation_url,
+      );
+    }
+  },
+);
 
 // リポジトリの詳細情報を取得（全データを結合）
 export async function getRepositoryDetail(
