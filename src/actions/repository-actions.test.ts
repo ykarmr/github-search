@@ -33,9 +33,6 @@ const mockValidateSearchQuery = vi.mocked(githubApi.validateSearchQuery);
 describe("Repository Actions", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // コンソールログをモック
-    vi.spyOn(console, "log").mockImplementation(() => {});
-    vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterEach(() => {
