@@ -4,6 +4,21 @@ import vitePluginEnv from "vite-plugin-env-compatible";
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
+  // 通常のNode環境テスト
+  {
+    extends: "./vitest.config.mts",
+    test: {
+      include: ["./src/**/*.{test,spec}.{ts,tsx}"],
+      exclude: [
+        "./src/**/*.browser.test.{ts,tsx}",
+        "./src/**/*.node.test.{ts,tsx}",
+      ],
+      name: "default",
+      environment: "jsdom",
+      setupFiles: [path.resolve(__dirname, "./vitest.setup.ts")],
+      clearMocks: true,
+    },
+  },
   {
     extends: "./vitest.config.mts",
     test: {
