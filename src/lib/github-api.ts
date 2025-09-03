@@ -182,35 +182,6 @@ export async function getRepositoryDetail(
   }
 }
 
-// GitHub API のレート制限情報を取得
-export async function getRateLimit() {
-  try {
-    const response = await octokit.rest.rateLimit.get();
-    return response.data;
-  } catch (error: any) {
-    throw new GitHubApiError(
-      error.message || "Failed to get rate limit",
-      error.status,
-      error.documentation_url,
-    );
-  }
-}
-
-// ユーティリティ関数: URL からオーナーとリポジトリ名を抽出
-export function parseGitHubUrl(
-  url: string,
-): { owner: string; repo: string } | null {
-  const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-  if (!match) {
-    return null;
-  }
-
-  return {
-    owner: match[1],
-    repo: match[2],
-  };
-}
-
 // ユーティリティ関数: 検索クエリの検証
 export function validateSearchQuery(query: string): boolean {
   if (!query || typeof query !== "string") {
