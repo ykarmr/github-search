@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import BackButton from "@/components/BackButton";
-import Breadcrumb from "@/components/Breadcrumb";
-import CopyButton from "@/components/CopyButton";
 import LanguageChart from "@/components/LanguageChart";
 import StatisticsDisplay from "@/components/StatisticsDisplay";
+import BackButton from "@/components/ui/BackButton";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import CopyButton from "@/components/ui/CopyButton";
 import { formatDate, formatRelativeTime, cn } from "@/lib/utils";
 import { RepositoryDetailProps } from "@/types/repository";
 

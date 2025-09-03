@@ -4,6 +4,7 @@ import { expect, test } from "vitest";
 import Page from "./page";
 
 test("Page", () => {
-  render(<Page />);
+  const searchParams = Promise.resolve({ q: "test", page: "1" });
+  render(<Page searchParams={searchParams} />);
   expect(1).toBe(1);
 });
