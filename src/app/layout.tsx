@@ -4,6 +4,14 @@ import { ReactNode } from "react";
 
 import Header from "@/components/Header";
 import "./globals.css";
+import { MSWMockProvider } from "@/components/Provider/MSWMockProvider";
+
+const mockingEnabled = !!process.env.NEXT_PUBLIC_API_MOCKING;
+
+if (process.env.NEXT_RUNTIME === "nodejs" && mockingEnabled) {
+  const { server } = await import("../__tests__/mocks/server");
+  server.listen();
+}
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,12 +55,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
-      >
-        <Header />
-        <main className="min-h-[calc(100vh-64px)]">{children}</main>
-      </body>
+      <MSWMockProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        >
+          <Header />
+          <main className="min-h-[calc(100vh-64px)]">{children}</main>
+        </body>
+      </MSWMockProvider>
     </html>
   );
 }
