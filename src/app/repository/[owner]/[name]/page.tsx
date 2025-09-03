@@ -33,9 +33,6 @@ export default async function RepositoryDetailPage({ params }: PageProps) {
       fallback={
         <RepositoryErrorFallback
           error={new Error("リポジトリの詳細情報を取得できませんでした")}
-          resetErrorBoundary={() => {
-            return window.location.reload();
-          }}
         />
       }
     >

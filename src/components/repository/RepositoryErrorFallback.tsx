@@ -1,12 +1,12 @@
+"use client";
+
 interface RepositoryErrorFallbackProps {
   error: Error;
-  resetErrorBoundary: () => void;
 }
 
 // エラーフォールバックコンポーネント
 export default function RepositoryErrorFallback({
   error,
-  resetErrorBoundary,
 }: RepositoryErrorFallbackProps) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
@@ -18,7 +18,9 @@ export default function RepositoryErrorFallback({
         <p className="text-gray-600 dark:text-gray-400 mb-6">{error.message}</p>
         <div className="flex gap-3 justify-center">
           <button
-            onClick={resetErrorBoundary}
+            onClick={() => {
+              return window.location.reload();
+            }}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             再試行
