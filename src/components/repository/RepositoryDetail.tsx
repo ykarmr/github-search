@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import LanguageChart from "@/components/LanguageChart";
 import StatisticsDisplay from "@/components/StatisticsDisplay";
@@ -46,14 +45,14 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
               </h1>
 
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-4">
-                <Link
+                <a
                   href={repository.owner.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 dark:text-blue-400 hover:underline text-sm sm:text-base"
                 >
                   {repository.owner.login}
-                </Link>
+                </a>
                 <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">
                   {repository.owner.type}
                 </span>
@@ -67,7 +66,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
 
               {/* アクションボタン */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
+                <a
                   href={repository.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -89,7 +88,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                     />
                   </svg>
                   GitHubで開く
-                </Link>
+                </a>
 
                 {repository.clone_url && (
                   <CopyButton text={repository.clone_url}>
