@@ -21,21 +21,15 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
   if (languageEntries.length === 0 || totalBytes === 0) {
     return (
       <div className={className}>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          使用言語
-        </h3>
-        <p className="text-gray-500 dark:text-gray-400">
-          言語情報が利用できません
-        </p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">使用言語</h3>
+        <p className="text-gray-500">言語情報が利用できません</p>
       </div>
     );
   }
 
   return (
     <div className={className}>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        使用言語
-      </h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">使用言語</h3>
 
       {/* 言語の横棒チャート */}
       <div className="space-y-3">
@@ -53,15 +47,13 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
                       style={{ backgroundColor: color }}
                       aria-label={`${language} color indicator`}
                     />
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-sm font-medium text-gray-900">
                       {language}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {percentage}%
-                  </span>
+                  <span className="text-sm text-gray-500">{percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="h-2 rounded-full transition-all duration-300"
                     style={{
@@ -90,13 +82,13 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
           return (
             <div
               key={language}
-              className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs"
+              className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full text-xs"
             >
               <div
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: color }}
               />
-              <span className="text-gray-700 dark:text-gray-300">
+              <span className="text-gray-700">
                 {language} {percentage}%
               </span>
             </div>

@@ -58,7 +58,7 @@ export default function RootLayout({
     <html lang="ja">
       <MSWMockProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
         >
           <Header />
           <main className="min-h-[calc(100vh-64px)]">{children}</main>

@@ -19,7 +19,7 @@ export default async function Home({ searchParams }: SearchPageProps) {
   const page = Math.max(1, parseInt(params.page || "1", 10));
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* 検索バー */}
         <div className="mb-6 sm:mb-8">

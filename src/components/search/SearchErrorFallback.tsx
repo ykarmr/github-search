@@ -9,7 +9,7 @@ export default function SearchErrorFallback({
   error,
 }: SearchErrorFallbackProps) {
   return (
-    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4 sm:mb-6">
+    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 sm:mb-6">
       <div className="flex items-center">
         <div className="flex-shrink-0">
           <svg
@@ -25,9 +25,7 @@ export default function SearchErrorFallback({
           </svg>
         </div>
         <div className="ml-3 flex-1">
-          <p className="text-xs sm:text-sm text-red-800 dark:text-red-200">
-            {error.message}
-          </p>
+          <p className="text-xs sm:text-sm text-red-800">{error.message}</p>
         </div>
         <button
           onClick={() => {

@@ -38,16 +38,14 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline"
+                className="text-blue-600 hover:text-blue-800 hover:underline"
               >
                 {item.label}
               </Link>
             ) : (
               <span
                 className={cn(
-                  isLast
-                    ? "text-gray-900 dark:text-gray-100 font-medium"
-                    : "text-gray-500 dark:text-gray-400",
+                  isLast ? "text-gray-900 font-medium" : "text-gray-500",
                 )}
               >
                 {item.label}

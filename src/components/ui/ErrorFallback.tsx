@@ -7,7 +7,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
       <div className="text-red-500 text-lg font-semibold mb-2">
         エラーが発生しました
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-4">
+      <p className="text-gray-600 mb-4">
         予期しないエラーが発生しました。ページを再読み込みしてください。
       </p>
       <button
@@ -21,7 +21,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
           <summary className="cursor-pointer text-gray-500">
             エラー詳細（開発環境のみ）
           </summary>
-          <pre className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto">
+          <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto">
             {error.stack}
           </pre>
         </details>

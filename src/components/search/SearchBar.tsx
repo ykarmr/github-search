@@ -46,8 +46,7 @@ export function SearchBar({
             className={cn(
               "w-full px-4 py-3 pl-10 sm:pl-12 pr-4 text-gray-900 bg-white border border-gray-300 rounded-lg",
               "focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none",
-              "dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400",
-              "placeholder-gray-500 dark:placeholder-gray-400",
+              "placeholder-gray-500",
               "text-sm sm:text-base",
             )}
             autoComplete="off"

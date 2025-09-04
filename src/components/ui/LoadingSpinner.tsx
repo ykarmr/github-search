@@ -31,7 +31,7 @@ export function LoadingSpinner({
         )}
       />
       {text && (
-        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center max-w-xs">
+        <p className="text-xs sm:text-sm text-gray-600 text-center max-w-xs">
           {text}
         </p>
       )}

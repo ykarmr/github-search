@@ -15,7 +15,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* ナビゲーション */}
         <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
@@ -33,7 +33,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                 alt={`${repository.owner.login} avatar`}
                 width={80}
                 height={80}
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-gray-200 dark:border-gray-700"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-gray-200"
                 unoptimized
               />
             </div>
@@ -42,7 +42,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
             <div className="flex-1 min-w-0 text-center sm:text-left">
               <h1
                 data-testid="repository-name"
-                className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 break-words"
+                className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 break-words"
               >
                 {repository.full_name}
               </h1>
@@ -52,11 +52,11 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                   href={repository.owner.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm sm:text-base"
+                  className="text-blue-600 hover:underline text-sm sm:text-base"
                 >
                   {repository.owner.login}
                 </a>
-                <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">
+                <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
                   {repository.owner.type}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
               {repository.description && (
                 <p
                   data-testid="repository-description"
-                  className="text-gray-600 dark:text-gray-400 mb-4 text-sm sm:text-base lg:text-lg leading-relaxed"
+                  className="text-gray-600 mb-4 text-sm sm:text-base lg:text-lg leading-relaxed"
                 >
                   {repository.description}
                 </p>
@@ -132,15 +132,15 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
 
           {/* その他の情報 */}
           <section>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-gray-900  mb-4">
               詳細情報
             </h3>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+            <div className="bg-white  rounded-lg border border-gray-200  p-6 space-y-4">
               {/* 最新コミット */}
               {repository.latestCommit && (
                 <div>
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                  <h4 className="font-medium text-gray-900  mb-2">
                     最新コミット
                   </h4>
                   <div className="flex items-start gap-3">
@@ -155,10 +155,10 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                       />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900 dark:text-white mb-1">
+                      <p className="text-sm text-gray-900 mb-1">
                         {repository.latestCommit.commit.message}
                       </p>
-                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
                         <span>
                           {repository.latestCommit.commit.author.name}
                         </span>
@@ -177,40 +177,34 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
               {/* 基本情報 */}
               <div className="grid grid-cols-1 gap-4">
                 <div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    作成日：
-                  </span>
+                  <span className="text-sm text-gray-500">作成日：</span>
                   <span
                     data-testid="repository-created-at"
-                    className="text-sm text-gray-900 dark:text-white ml-2"
+                    className="text-sm text-gray-900 ml-2"
                   >
                     {formatDate(repository.created_at)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    更新日：
-                  </span>
+                  <span className="text-sm text-gray-500">更新日：</span>
                   <span
                     data-testid="repository-updated-at"
-                    className="text-sm text-gray-900 dark:text-white ml-2"
+                    className="text-sm text-gray-900 ml-2"
                   >
                     {formatDate(repository.updated_at)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    メイン言語：
-                  </span>
-                  <span className="text-sm text-gray-900 dark:text-white ml-2">
+                  <span className="text-sm text-gray-500">メイン言語：</span>
+                  <span className="text-sm text-gray-900 ml-2">
                     {repository.language || "なし"}
                   </span>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-gray-500">
                     デフォルトブランチ：
                   </span>
-                  <span className="text-sm text-gray-900 dark:text-white ml-2">
+                  <span className="text-sm text-gray-900 ml-2">
                     {repository.default_branch}
                   </span>
                 </div>
@@ -218,10 +212,8 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                 {/* ライセンス */}
                 {repository.license && (
                   <div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      ライセンス：
-                    </span>
-                    <span className="text-sm text-gray-900 dark:text-white ml-2">
+                    <span className="text-sm text-gray-500">ライセンス：</span>
+                    <span className="text-sm text-gray-900 ml-2">
                       {repository.license.name}
                     </span>
                   </div>
@@ -234,7 +226,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
         {/* トピック */}
         {repository.topics && repository.topics.length > 0 && (
           <section className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
               トピック
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -244,8 +236,8 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                     key={topic}
                     className={cn(
                       "px-3 py-1 text-sm rounded-full",
-                      "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-                      "border border-blue-200 dark:border-blue-800",
+                      "bg-blue-100 text-blue-800",
+                      "border border-blue-200",
                     )}
                   >
                     {topic}

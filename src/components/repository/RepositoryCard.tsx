@@ -14,7 +14,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
     <div
       data-testid={`repository-card-${repository.id}`}
       className={cn(
-        "bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700",
+        "bg-white rounded-lg border border-gray-200",
         "p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200",
         "flex flex-col gap-4",
       )}
@@ -27,7 +27,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             alt={`${repository.owner.login} avatar`}
             width={48}
             height={48}
-            className="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700"
+            className="w-12 h-12 rounded-full border border-gray-200"
             unoptimized
           />
         </div>
@@ -35,8 +35,8 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
           <Link
             href={`/repository/${repository.owner.login}/${repository.name}`}
             className={cn(
-              "text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400",
-              "hover:text-blue-800 dark:hover:text-blue-300",
+              "text-lg sm:text-xl font-bold text-blue-600",
+              "hover:text-blue-800",
               "hover:underline transition-colors duration-200",
               "block break-words line-clamp-2",
             )}
@@ -48,13 +48,13 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
 
       {/* 説明 */}
       {repository.description && (
-        <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+        <p className="text-gray-600 mb-3 line-clamp-2">
           {repository.description}
         </p>
       )}
 
       {/* 統計情報とメタデータ */}
-      <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500">
         {/* 言語 */}
         {repository.language && (
           <div className="flex items-center gap-1">
@@ -155,7 +155,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
                   key={topic}
                   className={cn(
                     "px-2 py-1 text-xs rounded-full",
-                    "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+                    "bg-blue-100 text-blue-800",
                   )}
                 >
                   {topic}
@@ -163,7 +163,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
               );
             })}
             {repository.topics.length > 5 && (
-              <span className="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">
+              <span className="px-2 py-1 text-xs text-gray-500">
                 +{repository.topics.length - 5} more
               </span>
             )}

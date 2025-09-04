@@ -7,7 +7,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* ロゴとタイトル */}
@@ -30,7 +30,7 @@ export default function Header() {
                 </svg>
               </div>
               <div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">
+                <div className="text-lg font-bold text-gray-900">
                   GitHub Search
                 </div>
               </div>
@@ -43,7 +43,7 @@ export default function Header() {
               href="https://github.com/ykarmr/github-search"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               aria-label="GitHub"
               title="GitHub"
             >
@@ -57,8 +57,8 @@ export default function Header() {
 
       {/* モバイル用の追加情報 */}
       {pathname !== "/" && (
-        <div className="sm:hidden border-t border-gray-200 dark:border-gray-700 px-4 py-2">
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+        <div className="sm:hidden border-t border-gray-200 px-4 py-2">
+          <p className="text-sm text-gray-600 text-center">
             GitHubのリポジトリを検索・閲覧
           </p>
         </div>

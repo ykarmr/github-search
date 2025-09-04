@@ -22,13 +22,7 @@ export default async function RepositoryDetailContent({
   const result = await getRepositoryDetailAction(owner, name);
 
   if (result.error || !result.data) {
-    // 404エラーの場合
-    if (result.error?.includes("404")) {
-      notFound();
-    }
-
-    // その他のエラーをthrowして上位のErrorBoundaryでキャッチ
-    throw new Error(result.error || "リポジトリの取得に失敗しました");
+    notFound();
   }
 
   return <RepositoryDetail repository={result.data} />;
