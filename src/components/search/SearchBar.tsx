@@ -19,7 +19,7 @@ export function SearchBar({
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const query = formData.get("query") as string;
+    const query = formData.get("q") as string;
 
     if (!query?.trim()) {
       router.push("/");
@@ -30,12 +30,17 @@ export function SearchBar({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-3xl mx-auto"
+      data-testid="search-bar"
+    >
       <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-0">
         <div className="relative flex-1">
           <input
-            type="text"
-            name="query"
+            type="search"
+            name="q"
+            role="searchbox"
             defaultValue={defaultValue}
             placeholder={placeholder}
             className={cn(

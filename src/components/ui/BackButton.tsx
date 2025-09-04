@@ -16,6 +16,7 @@ export function BackButton({
   return (
     <Link
       href={href}
+      data-testid="back-button"
       className={cn(
         "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium",
         "text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800",
@@ -25,6 +26,7 @@ export function BackButton({
         "transition-colors duration-200",
         className,
       )}
+      role="button"
       aria-label="前のページに戻る"
     >
       <svg

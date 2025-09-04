@@ -27,7 +27,7 @@ export default async function Home({ searchParams }: SearchPageProps) {
         </div>
 
         {/* 検索結果表示 */}
-        <main>
+        <div>
           <ErrorBoundary
             fallback={
               <SearchErrorFallback
@@ -46,7 +46,7 @@ export default async function Home({ searchParams }: SearchPageProps) {
               <SearchResults query={query} page={page} />
             </Suspense>
           </ErrorBoundary>
-        </main>
+        </div>
       </div>
     </div>
   );

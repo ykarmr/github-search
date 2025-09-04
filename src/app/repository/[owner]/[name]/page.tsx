@@ -7,7 +7,7 @@ import {
 } from "@/components/repository";
 import ErrorBoundary from "@/components/ui/ErrorBoundary";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { generateRepositoryMetadata } from "@/lib/metadata";
+import { generateRepositoryMetadata, repositoryViewport } from "@/lib/metadata";
 
 interface PageProps {
   params: Promise<{
@@ -23,6 +23,9 @@ export async function generateMetadata({
   const { owner, name } = await params;
   return generateRepositoryMetadata({ owner, name });
 }
+
+// ビューポート設定
+export const viewport = repositoryViewport;
 
 // 詳細ページコンポーネント
 export default async function RepositoryDetailPage({ params }: PageProps) {

@@ -39,11 +39,13 @@ export default async function SearchResults({
   const hasMore = page * 30 < totalCount;
 
   return (
-    <RepositoryList
-      repositories={items}
-      hasMore={hasMore}
-      currentPage={page}
-      query={query}
-    />
+    <div data-testid="search-results">
+      <RepositoryList
+        repositories={items}
+        hasMore={hasMore}
+        currentPage={page}
+        query={query}
+      />
+    </div>
   );
 }

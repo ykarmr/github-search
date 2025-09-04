@@ -12,6 +12,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
 
   return (
     <div
+      data-testid={`repository-card-${repository.id}`}
       className={cn(
         "bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700",
         "p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200",

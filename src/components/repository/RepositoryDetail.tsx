@@ -40,7 +40,10 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
 
             {/* リポジトリ情報 */}
             <div className="flex-1 min-w-0 text-center sm:text-left">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 break-words">
+              <h1
+                data-testid="repository-name"
+                className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2 break-words"
+              >
                 {repository.full_name}
               </h1>
 
@@ -59,7 +62,10 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
               </div>
 
               {repository.description && (
-                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm sm:text-base lg:text-lg leading-relaxed">
+                <p
+                  data-testid="repository-description"
+                  className="text-gray-600 dark:text-gray-400 mb-4 text-sm sm:text-base lg:text-lg leading-relaxed"
+                >
                   {repository.description}
                 </p>
               )}
@@ -70,6 +76,7 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                   href={repository.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-testid="github-link"
                   className={cn(
                     "inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md text-sm sm:text-base",
                     "hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500",
@@ -102,14 +109,16 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
 
         {/* 統計情報 */}
         <section className="mb-6 sm:mb-8">
-          <StatisticsDisplay
-            stats={{
-              stars: repository.stargazers_count,
-              watchers: repository.watchers_count,
-              forks: repository.forks_count,
-              issues: repository.open_issues_count,
-            }}
-          />
+          <div data-testid="repository-statistics">
+            <StatisticsDisplay
+              stats={{
+                stars: repository.stargazers_count,
+                watchers: repository.watchers_count,
+                forks: repository.forks_count,
+                issues: repository.open_issues_count,
+              }}
+            />
+          </div>
         </section>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
@@ -171,7 +180,10 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     作成日：
                   </span>
-                  <span className="text-sm text-gray-900 dark:text-white ml-2">
+                  <span
+                    data-testid="repository-created-at"
+                    className="text-sm text-gray-900 dark:text-white ml-2"
+                  >
                     {formatDate(repository.created_at)}
                   </span>
                 </div>
@@ -179,7 +191,10 @@ export function RepositoryDetail({ repository }: RepositoryDetailProps) {
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     更新日：
                   </span>
-                  <span className="text-sm text-gray-900 dark:text-white ml-2">
+                  <span
+                    data-testid="repository-updated-at"
+                    className="text-sm text-gray-900 dark:text-white ml-2"
+                  >
                     {formatDate(repository.updated_at)}
                   </span>
                 </div>

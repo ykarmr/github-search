@@ -13,9 +13,11 @@
     "lint:prettier": "prettier --check ./src",
     "fix:eslint": "eslint './**/*.{ts,tsx}' --fix",
     "fix:prettier": "prettier --write ./src",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:e2e": "npx playwright test"
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest watch",
+    "test:e2e": "pnpm exec playwright test",
+    "test:e2e:watch": "pnpm exec playwright test --ui",
+    "test": "pnpm test:unit && pnpm test:e2e"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.0",
@@ -52,7 +54,7 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "jsdom": "^26.1.0",
-    "playwright": "^1.51.1",
+    "playwright": "^1.55.0",
     "prettier": "3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5",

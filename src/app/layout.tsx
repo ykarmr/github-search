@@ -42,10 +42,11 @@ export const metadata: Metadata = {
     description:
       "GitHubのリポジトリを検索して詳細を確認できるWebアプリケーション",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

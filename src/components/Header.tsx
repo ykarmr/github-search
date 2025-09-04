@@ -30,9 +30,9 @@ export default function Header() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+                <div className="text-lg font-bold text-gray-900 dark:text-white">
                   GitHub Search
-                </h1>
+                </div>
               </div>
             </Link>
           </div>

@@ -11,11 +11,8 @@ import {
   ApiError,
 } from "@/types/repository";
 
-// GitHub Personal Access Token (optional, for higher rate limits)
-const GITHUB_TOKEN =
-  process.env.GITHUB_TOKEN || process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-// Octokit インスタンスを作成
 const octokit = new Octokit({
   auth: GITHUB_TOKEN,
   userAgent: "github-search-app",

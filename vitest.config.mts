@@ -11,5 +11,6 @@ export default defineConfig({
       // vitest.setup.tsだと、実行したテストファイルからの相対パスになってしまう
       path.resolve(__dirname, "./vitest.setup.ts"),
     ],
+    exclude: ["./e2e/**/*"],
   },
 });

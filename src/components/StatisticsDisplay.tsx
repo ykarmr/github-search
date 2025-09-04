@@ -81,6 +81,7 @@ export function StatisticsDisplay({
           return (
             <div
               key={stat.key}
+              data-testid={`repository-${stat.key}`}
               className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4 text-center"
             >
               <div className={`flex justify-center mb-1 sm:mb-2 ${stat.color}`}>
