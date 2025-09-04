@@ -9,16 +9,16 @@
 - 🔍 **リポジトリ検索**: キーワードやリポジトリ名でGitHubリポジトリを検索
 - 📊 **詳細情報表示**: リポジトリの統計情報、言語構成、最新コミット情報
 - 📱 **レスポンシブデザイン**: モバイル、タブレット、デスクトップに対応
-- 🧪 **包括的なテスト**: ユニット、統合、E2Eテストを完備
+- 🧪 **包括的なテスト**: ユニット、E2Eテストを完備
 
 ## 🛠 技術スタック
 
 ### フロントエンド
 
 - **Next.js 15** - App Router使用
-- **React 19** - 最新のReact機能を活用
-- **TypeScript** - 型安全性の確保
-- **Tailwind CSS** - ユーティリティファーストCSS
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS**
 
 ### API・データ
 
@@ -28,10 +28,10 @@
 
 ### テスト
 
-- **Vitest** - 高速なユニット・統合テスト
-- **React Testing Library** - コンポーネントテスト
-- **Playwright** - E2Eテスト
-- **MSW** - APIモックによるテスト
+- **Vitest**
+- **React Testing Library**
+- **Playwright**
+- **MSW**
 
 ## 📋 必要要件
 
@@ -110,12 +110,13 @@ src/
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx          # ルートレイアウト
 │   ├── page.tsx            # ホームページ（検索機能）
+│   ├── not-found.tsx       # 404ページ
 │   └── repository/         # リポジトリ詳細ページ
 │       └── [owner]/
 │           └── [name]/
 │               ├── page.tsx        # 詳細ページ
-│               ├── loading.tsx     # ローディング状態
-│               └── not-found.tsx   # 404ページ
+│               ├── error.tsx        # エラーバウンダリー
+│               └──  loading.tsx     # ローディング状態
 ├── components/             # Reactコンポーネント
 │   ├── search/             # 検索関連コンポーネント
 │   ├── repository/         # リポジトリ関連コンポーネント
