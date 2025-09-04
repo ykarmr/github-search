@@ -12,5 +12,6 @@ export default defineConfig({
       path.resolve(__dirname, "./vitest.setup.ts"),
     ],
     exclude: ["./e2e/**/*"],
+    include: ["./src/**/*.test.*"],
   },
 });
