@@ -22,7 +22,6 @@
   "dependencies": {
     "@octokit/rest": "^22.0.0",
     "clsx": "^2.1.1",
-    "destyle.css": "^4.0.1",
     "msw": "^2.11.1",
     "next": "15.5.2",
     "react": "19.1.0",
