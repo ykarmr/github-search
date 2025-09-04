@@ -151,3 +151,50 @@ pnpm build
 # 本番サーバー起動
 pnpm start
 ```
+
+## アプリケーションの実装の流れ
+
+1. 環境のセットアップ
+   1. Next.jsのセットアップ
+   2. linter, formatterのセットアップ
+      1. Eslint
+      2. Prettier
+   3. テスト環境の構築
+      1. Vitest
+      2. Playwright
+2. AIを使い、アプリケーションの骨組みの作成
+   1. [プロンプトの作成](./prompt.md)
+   2. 1で作成したプロンプトの実行
+3. 2で作成したアプリケーションの微修正
+4. AIを使い、e2eテストとunitテストを実装
+
+## 工夫した点、こだわった箇所
+
+- AI(Github Copilot)を使い、実装の8割を完成させた
+- なるべくサーバーコンポーネントを使い、クライアントコンポーネントの利用を必要最低限に抑えた
+- サーバコンポーネントのテスト方法はまだ確立していない認識なので、e2eテストで対応
+- MSWを利用して、APIを実際に利用した状態に寄せたMock環境の構築
+- SuspenseやError Boundaryの活用
+- React cacheを活用したAPIキャッシュ戦略
+
+```typescript
+import { cache } from "react";
+
+export const searchRepositories = cache(async (params: SearchParams) => {
+  // GitHub API呼び出し
+});
+
+export const getRepository = cache(async (owner: string, repo: string) => {
+  // 単一リポジトリ取得
+});
+```
+
+- 並列処理による詳細情報取得の最適化
+
+```typescript
+const [repository, languages, commits] = await Promise.allSettled([
+  getRepository(owner, repo),
+  getRepositoryLanguages(owner, repo),
+  getLatestCommit(owner, repo),
+]);
+```
