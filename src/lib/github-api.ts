@@ -15,7 +15,6 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const octokit = new Octokit({
   auth: GITHUB_TOKEN,
-  userAgent: "github-search-app",
 });
 
 // API エラーハンドリング
