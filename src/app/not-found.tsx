@@ -6,11 +6,9 @@ export default function NotFound() {
       <div className="text-center">
         <div className="text-6xl text-gray-400 mb-4">404</div>
         <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          リポジトリが見つかりませんでした
+          存在しないページです
         </h1>
-        <p className="text-gray-600 mb-6 max-w-md mx-auto">
-          指定されたリポジトリが存在しないか、アクセス権限がない可能性があります。
-        </p>
+
         <div className="space-x-4">
           <Link
             href="/"
@@ -30,12 +28,6 @@ export default function NotFound() {
               />
             </svg>
             ホームに戻る
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-          >
-            別のリポジトリを検索
           </Link>
         </div>
       </div>
