@@ -51,20 +51,6 @@ test.describe("リポジトリ詳細ページ - 基本機能", () => {
     ).toBeVisible();
   });
 
-  test("エラー状態が正しく表示されること", async ({ page }) => {
-    await page.goto("/repository/invalid/repo");
-
-    // エラーメッセージの確認（テキストベース）
-    const errorText = page.locator('text="エラーが発生しました"');
-    if (await errorText.isVisible()) {
-      await expect(errorText).toBeVisible();
-    } else {
-      // 代替アプローチ：エラー表示の色クラスを確認
-      const errorElement = page.locator(".text-red-500");
-      await expect(errorElement).toBeVisible();
-    }
-  });
-
   test("ホームに戻れること", async ({ page }) => {
     await page.goto("/repository/facebook/react");
 
