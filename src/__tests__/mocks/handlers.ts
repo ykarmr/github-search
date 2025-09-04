@@ -675,6 +675,235 @@ export const handlers = [
       });
     }
 
+    // テスト用のエラーケース
+    if (owner === "test-user" && repo === "language-error") {
+      return HttpResponse.json<
+        RestEndpointMethodTypes["repos"]["get"]["response"]["data"]
+      >({
+        id: 123456,
+        node_id: "MDEwOlJlcG9zaXRvcnkxMjM0NTY=",
+        name: "language-error",
+        full_name: "test-user/language-error",
+        private: false,
+        owner: {
+          login: "test-user",
+          id: 99999,
+          node_id: "MDQ6VXNlcjk5OTk5",
+          avatar_url: "https://avatars.githubusercontent.com/u/99999?v=4",
+          gravatar_id: "",
+          url: "https://api.github.com/users/test-user",
+          html_url: "https://github.com/test-user",
+          followers_url: "https://api.github.com/users/test-user/followers",
+          following_url:
+            "https://api.github.com/users/test-user/following{/other_user}",
+          gists_url: "https://api.github.com/users/test-user/gists{/gist_id}",
+          starred_url:
+            "https://api.github.com/users/test-user/starred{/owner}{/repo}",
+          subscriptions_url:
+            "https://api.github.com/users/test-user/subscriptions",
+          organizations_url: "https://api.github.com/users/test-user/orgs",
+          repos_url: "https://api.github.com/users/test-user/repos",
+          events_url: "https://api.github.com/users/test-user/events{/privacy}",
+          received_events_url:
+            "https://api.github.com/users/test-user/received_events",
+          type: "User",
+          user_view_type: "public",
+          site_admin: false,
+        },
+        html_url: "https://github.com/test-user/language-error",
+        description: "Test repository for language error handling",
+        fork: false,
+        url: "https://api.github.com/repos/test-user/language-error",
+        // 他の必須プロパティを簡略化
+        forks_url: "",
+        keys_url: "",
+        collaborators_url: "",
+        teams_url: "",
+        hooks_url: "",
+        issue_events_url: "",
+        events_url: "",
+        assignees_url: "",
+        branches_url: "",
+        tags_url: "",
+        blobs_url: "",
+        git_tags_url: "",
+        git_refs_url: "",
+        trees_url: "",
+        statuses_url: "",
+        languages_url: "",
+        stargazers_url: "",
+        contributors_url: "",
+        subscribers_url: "",
+        subscription_url: "",
+        commits_url: "",
+        git_commits_url: "",
+        comments_url: "",
+        issue_comment_url: "",
+        contents_url: "",
+        compare_url: "",
+        merges_url: "",
+        archive_url: "",
+        downloads_url: "",
+        issues_url: "",
+        pulls_url: "",
+        milestones_url: "",
+        notifications_url: "",
+        labels_url: "",
+        releases_url: "",
+        deployments_url: "",
+        created_at: "2023-01-01T00:00:00Z",
+        updated_at: "2023-01-01T00:00:00Z",
+        pushed_at: "2023-01-01T00:00:00Z",
+        git_url: "",
+        ssh_url: "",
+        clone_url: "",
+        svn_url: "",
+        homepage: null,
+        size: 100,
+        stargazers_count: 0,
+        watchers_count: 0,
+        language: "JavaScript",
+        has_issues: true,
+        has_projects: true,
+        has_downloads: true,
+        has_wiki: true,
+        has_pages: false,
+        has_discussions: false,
+        forks_count: 0,
+        mirror_url: null,
+        archived: false,
+        disabled: false,
+        open_issues_count: 0,
+        license: null,
+        allow_forking: true,
+        is_template: false,
+        web_commit_signoff_required: false,
+        topics: [],
+        visibility: "public",
+        forks: 0,
+        open_issues: 0,
+        watchers: 0,
+        default_branch: "main",
+        temp_clone_token: null,
+        network_count: 0,
+        subscribers_count: 0,
+      });
+    }
+
+    if (owner === "test-user" && repo === "commit-error") {
+      return HttpResponse.json<
+        RestEndpointMethodTypes["repos"]["get"]["response"]["data"]
+      >({
+        id: 789012,
+        node_id: "MDEwOlJlcG9zaXRvcnk3ODkwMTI=",
+        name: "commit-error",
+        full_name: "test-user/commit-error",
+        private: false,
+        owner: {
+          login: "test-user",
+          id: 99999,
+          node_id: "MDQ6VXNlcjk5OTk5",
+          avatar_url: "https://avatars.githubusercontent.com/u/99999?v=4",
+          gravatar_id: "",
+          url: "https://api.github.com/users/test-user",
+          html_url: "https://github.com/test-user",
+          followers_url: "https://api.github.com/users/test-user/followers",
+          following_url:
+            "https://api.github.com/users/test-user/following{/other_user}",
+          gists_url: "https://api.github.com/users/test-user/gists{/gist_id}",
+          starred_url:
+            "https://api.github.com/users/test-user/starred{/owner}{/repo}",
+          subscriptions_url:
+            "https://api.github.com/users/test-user/subscriptions",
+          organizations_url: "https://api.github.com/users/test-user/orgs",
+          repos_url: "https://api.github.com/users/test-user/repos",
+          events_url: "https://api.github.com/users/test-user/events{/privacy}",
+          received_events_url:
+            "https://api.github.com/users/test-user/received_events",
+          type: "User",
+          user_view_type: "public",
+          site_admin: false,
+        },
+        html_url: "https://github.com/test-user/commit-error",
+        description: "Test repository for commit error handling",
+        fork: false,
+        url: "https://api.github.com/repos/test-user/commit-error",
+        // 他の必須プロパティを簡略化
+        forks_url: "",
+        keys_url: "",
+        collaborators_url: "",
+        teams_url: "",
+        hooks_url: "",
+        issue_events_url: "",
+        events_url: "",
+        assignees_url: "",
+        branches_url: "",
+        tags_url: "",
+        blobs_url: "",
+        git_tags_url: "",
+        git_refs_url: "",
+        trees_url: "",
+        statuses_url: "",
+        languages_url: "",
+        stargazers_url: "",
+        contributors_url: "",
+        subscribers_url: "",
+        subscription_url: "",
+        commits_url: "",
+        git_commits_url: "",
+        comments_url: "",
+        issue_comment_url: "",
+        contents_url: "",
+        compare_url: "",
+        merges_url: "",
+        archive_url: "",
+        downloads_url: "",
+        issues_url: "",
+        pulls_url: "",
+        milestones_url: "",
+        notifications_url: "",
+        labels_url: "",
+        releases_url: "",
+        deployments_url: "",
+        created_at: "2023-01-01T00:00:00Z",
+        updated_at: "2023-01-01T00:00:00Z",
+        pushed_at: "2023-01-01T00:00:00Z",
+        git_url: "",
+        ssh_url: "",
+        clone_url: "",
+        svn_url: "",
+        homepage: null,
+        size: 100,
+        stargazers_count: 0,
+        watchers_count: 0,
+        language: "JavaScript",
+        has_issues: true,
+        has_projects: true,
+        has_downloads: true,
+        has_wiki: true,
+        has_pages: false,
+        has_discussions: false,
+        forks_count: 0,
+        mirror_url: null,
+        archived: false,
+        disabled: false,
+        open_issues_count: 0,
+        license: null,
+        allow_forking: true,
+        is_template: false,
+        web_commit_signoff_required: false,
+        topics: [],
+        visibility: "public",
+        forks: 0,
+        open_issues: 0,
+        watchers: 0,
+        default_branch: "main",
+        temp_clone_token: null,
+        network_count: 0,
+        subscribers_count: 0,
+      });
+    }
+
     return HttpResponse.json(
       {
         message: "Not Found",
@@ -706,6 +935,23 @@ export const handlers = [
           Python: 259,
           Makefile: 189,
         });
+      }
+
+      // test-user/language-errorの場合はエラーを返す
+      if (owner === "test-user" && repo === "language-error") {
+        return HttpResponse.json(
+          {
+            message: "Server Error",
+            documentation_url:
+              "https://docs.github.com/rest/reference/repos#list-repository-languages",
+          },
+          { status: 500 },
+        );
+      }
+
+      // test-user/commit-errorの場合は正常に空のオブジェクトを返す
+      if (owner === "test-user" && repo === "commit-error") {
+        return HttpResponse.json({});
       }
 
       return HttpResponse.json({});
@@ -3799,6 +4045,23 @@ export const handlers = [
             ],
           },
         ]);
+      }
+
+      // test-user/commit-errorの場合はエラーを返す
+      if (owner === "test-user" && repo === "commit-error") {
+        return HttpResponse.json(
+          {
+            message: "Server Error",
+            documentation_url:
+              "https://docs.github.com/rest/reference/repos#list-commits",
+          },
+          { status: 500 },
+        );
+      }
+
+      // test-user/language-errorの場合は正常に空の配列を返す
+      if (owner === "test-user" && repo === "language-error") {
+        return HttpResponse.json([]);
       }
 
       return HttpResponse.json([]);
