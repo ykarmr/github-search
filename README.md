@@ -1,36 +1,153 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitHub Repository Search App
 
-## Getting Started
+## 🚀 概要
 
-First, run the development server:
+このアプリケーションは、GitHub APIを使用してリポジトリを検索し、詳細情報を表示する機能を提供します。
+
+### 主な機能
+
+- 🔍 **リポジトリ検索**: キーワードやリポジトリ名でGitHubリポジトリを検索
+- 📊 **詳細情報表示**: リポジトリの統計情報、言語構成、最新コミット情報
+- 📱 **レスポンシブデザイン**: モバイル、タブレット、デスクトップに対応
+- 🧪 **包括的なテスト**: ユニット、統合、E2Eテストを完備
+
+## 🛠 技術スタック
+
+### フロントエンド
+
+- **Next.js 15** - App Router使用
+- **React 19** - 最新のReact機能を活用
+- **TypeScript** - 型安全性の確保
+- **Tailwind CSS** - ユーティリティファーストCSS
+
+### API・データ
+
+- **GitHub REST API** - リポジトリデータの取得
+- **Octokit** - GitHub API クライアント
+- **Server Actions** - フォーム処理とデータ更新
+
+### テスト
+
+- **Vitest** - 高速なユニット・統合テスト
+- **React Testing Library** - コンポーネントテスト
+- **Playwright** - E2Eテスト
+- **MSW** - APIモックによるテスト
+
+## 📋 必要要件
+
+- Node.js 18以降
+- pnpm 8以降
+- GitHub Personal Access Token（推奨）
+
+## 🚀 セットアップ
+
+### 1. リポジトリのクローン
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ykarmr/github-search.git
+cd github-search
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 依存関係のインストール
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. 環境変数の設定
 
-## Learn More
+`.env.local`ファイルを作成し、GitHub Personal Access Tokenを設定します：
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# .env.local
+GITHUB_TOKEN=your_github_personal_access_token_here
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. アプリケーションの起動
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# 開発サーバー起動
+pnpm dev
 
-## Deploy on Vercel
+# モック環境での開発（APIを使用しない）
+pnpm dev:mock
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+アプリケーションは <http://localhost:3000> でアクセスできます。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 テスト
+
+### すべてのテストを実行
+
+```bash
+pnpm test
+```
+
+### ユニット・統合テスト
+
+```bash
+# テスト実行
+pnpm test:unit
+
+# ウォッチモードでテスト
+pnpm test:unit:watch
+```
+
+### E2Eテスト
+
+```bash
+# E2Eテスト実行
+pnpm test:e2e
+
+# UIモードでE2Eテスト
+pnpm test:e2e:watch
+```
+
+## 🏗 プロジェクト構造
+
+```txt
+src/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx          # ルートレイアウト
+│   ├── page.tsx            # ホームページ（検索機能）
+│   └── repository/         # リポジトリ詳細ページ
+│       └── [owner]/
+│           └── [name]/
+│               ├── page.tsx        # 詳細ページ
+│               ├── loading.tsx     # ローディング状態
+│               └── not-found.tsx   # 404ページ
+├── components/             # Reactコンポーネント
+│   ├── search/             # 検索関連コンポーネント
+│   ├── repository/         # リポジトリ関連コンポーネント
+│   └── ui/                 # 汎用UIコンポーネント
+├── lib/                    # ユーティリティ・API
+│   ├── github-api.ts       # GitHub API クライアント
+│   ├── utils.ts            # ユーティリティ関数
+│   └── metadata.ts         # メタデータヘルパー
+├── types/                  # TypeScript型定義
+├── actions/                # Server Actions
+└── __tests__/              # テストファイル関連
+```
+
+## 🔧 開発
+
+### コード品質
+
+```bash
+# リント実行
+pnpm lint
+
+# フォーマット修正
+pnpm fix:prettier
+pnpm fix:eslint
+```
+
+### ビルド
+
+```bash
+# プロダクションビルド
+pnpm build
+
+# 本番サーバー起動
+pnpm start
+```
