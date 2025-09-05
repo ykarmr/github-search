@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
 import { beforeAll, afterEach, afterAll, beforeEach, vi } from "vitest";
 
 import { server } from "./src/__tests__/mocks/server";
@@ -24,6 +25,8 @@ beforeEach(() => {
 
 afterEach(() => {
   server.resetHandlers();
+  cleanup(); // DOM要素をクリーンアップ
+  vi.clearAllMocks(); // すべてのモックをクリア
 });
 
 afterAll(() => {
