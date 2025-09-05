@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 
+import { generateRepositoryMetadata } from "./metadata";
+
 import { RepositoryDetailContent } from "@/components/repository";
 import { loggerWrapper } from "@/lib/loggerWrapper";
-import { generateRepositoryMetadata } from "@/lib/metadata";
 
 interface PageProps {
   params: Promise<{
