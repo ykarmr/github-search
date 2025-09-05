@@ -10,18 +10,33 @@ vi.mock("server-only", () => {
   };
 });
 
+vi.mock("pino", () => {
+  return {
+    default: vi.fn(() => {
+      return {
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+        debug: vi.fn(),
+        trace: vi.fn(),
+        fatal: vi.fn(),
+      };
+    }),
+  };
+});
+
+// コンソールログをモック
+vi.spyOn(console, "log").mockImplementation(() => {});
+vi.spyOn(console, "info").mockImplementation(() => {});
+vi.spyOn(console, "warn").mockImplementation(() => {});
+vi.spyOn(console, "error").mockImplementation(() => {});
+
 beforeAll(() => {
   // MSWの設定
   server.listen();
 });
 
-beforeEach(() => {
-  // コンソールログをモック
-  vi.spyOn(console, "log").mockImplementation(() => {});
-  vi.spyOn(console, "info").mockImplementation(() => {});
-  vi.spyOn(console, "info").mockImplementation(() => {});
-  vi.spyOn(console, "error").mockImplementation(() => {});
-});
+beforeEach(() => {});
 
 afterEach(() => {
   server.resetHandlers();

@@ -6,7 +6,7 @@ import {
   validateSearchQuery,
   GitHubApiError,
 } from "@/lib/github-api";
-import { logger } from "@/lib/logget";
+import { logger } from "@/lib/logger";
 import {
   SearchParams,
   SearchRepositoriesResponse,

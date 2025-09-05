@@ -1,6 +1,6 @@
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
-import { logger } from "./logget";
+import { logger } from "./logger";
 import "server-only";
 
 export async function loggerWrapper(
