@@ -26,6 +26,10 @@
 - **Octokit** - GitHub API クライアント
 - **Server Actions** - フォーム処理とデータ更新
 
+### ログ・監視
+
+- **Pino** - 高性能な構造化ログライブラリ
+
 ### テスト
 
 - **Vitest**
@@ -123,6 +127,9 @@ src/
 │   └── ui/                 # 汎用UIコンポーネント
 ├── lib/                    # ユーティリティ・API
 │   ├── github-api.ts       # GitHub API クライアント
+│   ├── logger.ts           # ログライブラリ設定
+│   ├── loggerOptions.ts    # ログ設定オプション
+│   ├── loggerWrapper.ts    # ログラッパー関数
 │   ├── utils.ts            # ユーティリティ関数
 │   └── metadata.ts         # メタデータヘルパー
 ├── types/                  # TypeScript型定義
@@ -198,4 +205,19 @@ const [repository, languages, commits] = await Promise.allSettled([
   getRepositoryLanguages(owner, repo),
   getLatestCommit(owner, repo),
 ]);
+```
+
+- 構造化ログによる運用監視
+
+```typescript
+import { logger } from "@/lib/logger";
+
+// API呼び出しの記録
+logger.info({ path, query }, "リクエストを受け取りました");
+
+// エラーの詳細記録
+logger.error(
+  { error: error.message, path },
+  "リクエストの処理中にエラーが発生しました",
+);
 ```
