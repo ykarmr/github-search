@@ -13,10 +13,11 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // 実験的機能の設定
   experimental: {
     optimizePackageImports: ["@tailwindcss/postcss"],
   },
+
+  output: "standalone",
 };
 
 export default nextConfig;
