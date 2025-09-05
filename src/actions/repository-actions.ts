@@ -41,7 +41,7 @@ export async function searchRepositoriesAction(
       logger.warn({ query }, "Searching repositories: クエリが無効です");
 
       return {
-        error: " 有効な検索クエリを入力してください",
+        error: "有効な検索クエリを入力してください",
       };
     }
 
