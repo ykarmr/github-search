@@ -51,19 +51,20 @@ test.describe("リポジトリ詳細ページ - 基本機能", () => {
     ).toBeVisible();
   });
 
-  test("ホームに戻れること", async ({ page }) => {
+  test("前の画面に戻れること", async ({ page }) => {
+    // まずホーム画面から開始
+    await page.goto("/");
+
+    // リポジトリ詳細ページに遷移
     await page.goto("/repository/facebook/react");
 
-    // ホームに戻るリンクをクリック（data-testidを使用）
+    // 戻るボタンをクリック
     const backButton = page.locator('[data-testid="back-button"]');
-    if (await backButton.isVisible()) {
-      await backButton.click();
-      await expect(page).toHaveURL("/");
-    } else {
-      // 直接ナビゲーション
-      await page.goto("/");
-      await expect(page).toHaveURL("/");
-    }
+    await expect(backButton).toBeVisible();
+    await backButton.click();
+
+    // ホーム画面に戻ることを確認
+    await expect(page).toHaveURL("/");
   });
 
   test("レスポンシブ対応 - モバイルサイズで表示されること", async ({

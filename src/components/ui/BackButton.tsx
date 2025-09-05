@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
@@ -8,14 +10,11 @@ interface BackButtonProps {
   href?: string;
 }
 
-export function BackButton({
-  className,
-  label = "戻る",
-  href = "/",
-}: BackButtonProps) {
+export function BackButton({ className, label = "戻る" }: BackButtonProps) {
+  const { back } = useRouter();
   return (
-    <Link
-      href={href}
+    <button
+      onClick={back}
       data-testid="back-button"
       className={cn(
         "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium",
@@ -44,7 +43,7 @@ export function BackButton({
         />
       </svg>
       {label}
-    </Link>
+    </button>
   );
 }
 
