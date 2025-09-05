@@ -81,7 +81,7 @@ export const searchRepositoriesAction = cache(
       const result = await searchRepositories(params);
 
       logger.info(
-        { query, sort, order, perPage, page, result },
+        { query, sort, order, perPage, page },
         "Searching repositories: リクエストが成功しました",
       );
 
@@ -124,7 +124,7 @@ export const getRepositoryDetailAction = cache(
       const result = await getRepositoryDetail(owner, repo);
 
       logger.info(
-        { owner, repo, result },
+        { owner, repo },
         "Getting repository detail: リクエストが成功しました",
       );
 
