@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import { RepositoryDetailContent } from "@/components/repository";
+import { loggerWrapper } from "@/lib/loggerWrapper";
 import { generateRepositoryMetadata } from "@/lib/metadata";
 
 interface PageProps {
@@ -27,6 +28,7 @@ export const viewport = {
 // 詳細ページコンポーネント
 export default async function RepositoryDetailPage({ params }: PageProps) {
   const { owner, name } = await params;
-
-  return <RepositoryDetailContent owner={owner} name={name} />;
+  return await loggerWrapper(`/repository/${owner}/${name}`, async () => {
+    return <RepositoryDetailContent owner={owner} name={name} />;
+  });
 }

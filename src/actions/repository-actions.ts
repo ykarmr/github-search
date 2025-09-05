@@ -6,6 +6,7 @@ import {
   validateSearchQuery,
   GitHubApiError,
 } from "@/lib/github-api";
+import { logger } from "@/lib/logget";
 import {
   SearchParams,
   SearchRepositoriesResponse,
@@ -30,15 +31,27 @@ export async function searchRepositoriesAction(
   page: number = 1,
 ): Promise<SearchResult> {
   try {
+    logger.info(
+      { query, sort, order, perPage, page },
+      "Searching repositories: リクエストを受け付けました",
+    );
+
     // バリデーション
     if (!validateSearchQuery(query)) {
+      logger.warn({ query }, "Searching repositories: クエリが無効です");
+
       return {
-        error: "有効な検索クエリを入力してください",
+        error: " 有効な検索クエリを入力してください",
       };
     }
 
     // per_page の範囲チェック
     if (perPage < 1 || perPage > 100) {
+      logger.warn(
+        { perPage },
+        "Searching repositories: per_pageの範囲が無効です",
+      );
+
       return {
         error: "per_pageは1から100の間で指定してください",
       };
@@ -46,6 +59,8 @@ export async function searchRepositoriesAction(
 
     // page の範囲チェック
     if (page < 1) {
+      logger.warn({ page }, "Searching repositories: pageの範囲が無効です");
+
       return {
         error: "pageは1以上で指定してください",
       };
@@ -62,18 +77,16 @@ export async function searchRepositoriesAction(
 
     const result = await searchRepositories(params);
 
-    // eslint-disable-next-line no-console
-    console.log("Search result:", {
-      totalCount: result.total_count,
-      itemsCount: result.items.length,
-    });
+    logger.info(
+      { query, sort, order, perPage, page, result },
+      "Searching repositories: リクエストが成功しました",
+    );
 
     return {
       data: result,
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Repository search error:", error);
+    logger.error({ error }, "Searching repositories: リクエストが失敗しました");
 
     if (error instanceof GitHubApiError) {
       return {
@@ -92,6 +105,11 @@ export async function getRepositoryDetailAction(
   repo: string,
 ): Promise<RepositoryDetailResult> {
   try {
+    logger.info(
+      { owner, repo },
+      "Getting repository detail: リクエストを受け付けました",
+    );
+
     if (!owner || !repo) {
       return {
         error: "オーナー名とリポジトリ名が必要です",
@@ -100,12 +118,19 @@ export async function getRepositoryDetailAction(
 
     const result = await getRepositoryDetail(owner, repo);
 
+    logger.info(
+      { owner, repo, result },
+      "Getting repository detail: リクエストが成功しました",
+    );
+
     return {
       data: result,
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Repository detail error:", error);
+    logger.error(
+      { error },
+      "Getting repository detail: リクエストが失敗しました",
+    );
 
     if (error instanceof GitHubApiError) {
       return {
