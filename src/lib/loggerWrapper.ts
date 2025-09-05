@@ -3,10 +3,10 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { logger } from "./logger";
 import "server-only";
 
-export async function loggerWrapper(
+export async function loggerWrapper<T>(
   path: string,
-  fn: () => Promise<unknown>,
-): Promise<unknown> {
+  fn: () => Promise<T>,
+): Promise<T> {
   logger.info({ path }, `リクエストを受け取りました`);
 
   try {
