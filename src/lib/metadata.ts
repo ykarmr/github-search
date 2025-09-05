@@ -49,8 +49,3 @@ export async function generateRepositoryMetadata({
     };
   }
 }
-
-export const repositoryViewport = {
-  width: "device-width",
-  initialScale: 1,
-};

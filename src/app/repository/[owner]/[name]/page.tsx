@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import { RepositoryDetailContent } from "@/components/repository";
-import { generateRepositoryMetadata, repositoryViewport } from "@/lib/metadata";
+import { generateRepositoryMetadata } from "@/lib/metadata";
 
 interface PageProps {
   params: Promise<{
@@ -19,7 +19,10 @@ export async function generateMetadata({
 }
 
 // ビューポート設定
-export const viewport = repositoryViewport;
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 // 詳細ページコンポーネント
 export default async function RepositoryDetailPage({ params }: PageProps) {

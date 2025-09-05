@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { expect, test, describe } from "vitest";
 
-import { generateRepositoryMetadata, repositoryViewport } from "./metadata";
+import { generateRepositoryMetadata } from "./metadata";
 
 describe("generateRepositoryMetadata", () => {
   test("正常処理の場合、メタデータが正しく生成される", async () => {
@@ -42,24 +42,5 @@ describe("generateRepositoryMetadata", () => {
     };
 
     expect(result).toEqual(expected);
-  });
-});
-
-describe("repositoryViewport", () => {
-  test("ビューポート設定が正しく定義されている", () => {
-    expect(repositoryViewport).toEqual({
-      width: "device-width",
-      initialScale: 1,
-    });
-  });
-
-  test("ビューポート設定のプロパティが存在する", () => {
-    expect(repositoryViewport).toHaveProperty("width");
-    expect(repositoryViewport).toHaveProperty("initialScale");
-  });
-
-  test("ビューポート設定の値が正しい型である", () => {
-    expect(typeof repositoryViewport.width).toBe("string");
-    expect(typeof repositoryViewport.initialScale).toBe("number");
   });
 });
