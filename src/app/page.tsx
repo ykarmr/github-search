@@ -5,7 +5,7 @@ import SearchErrorFallback from "@/components/search/SearchErrorFallback";
 import SearchResults from "@/components/search/SearchResults";
 import ErrorBoundary from "@/components/ui/ErrorBoundary";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { loggerWrapper } from "@/lib/loggerWrapper";
+import { loggerWrapper } from "@/lib/logger-wrapper";
 
 interface SearchPageProps {
   searchParams: Promise<{

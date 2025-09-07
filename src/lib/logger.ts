@@ -1,5 +1,5 @@
 import pino from "pino";
 
-import { loggerOptions } from "./loggerOptions";
+import { loggerOptions } from "./logger-options";
 
 export const logger = pino(loggerOptions);
