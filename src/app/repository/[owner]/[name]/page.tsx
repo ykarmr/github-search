@@ -5,6 +5,8 @@ import { generateRepositoryMetadata } from "./metadata";
 import { RepositoryDetailContent } from "@/components/repository";
 import { loggerWrapper } from "@/lib/logger-wrapper";
 
+export const revalidate = 600; // 10分ごとに再検証する
+
 interface PageProps {
   params: Promise<{
     owner: string;
