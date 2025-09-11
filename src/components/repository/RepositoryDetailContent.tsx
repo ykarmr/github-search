@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import RepositoryDetail from "./RepositoryDetail";
+import { RepositoryDetailSections } from "./RepositoryDetailSections";
 
-import { getRepositoryDetailAction } from "@/actions/repository-actions";
+import BackButton from "@/components/ui/BackButton";
 
 interface RepositoryDetailContentProps {
   owner: string;
@@ -19,11 +19,15 @@ export default async function RepositoryDetailContent({
     notFound();
   }
 
-  const result = await getRepositoryDetailAction(owner, name);
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="mb-6">
+          <BackButton />
+        </div>
 
-  if (result.error || !result.data) {
-    notFound();
-  }
-
-  return <RepositoryDetail repository={result.data} />;
+        <RepositoryDetailSections owner={owner} name={name} />
+      </div>
+    </div>
+  );
 }

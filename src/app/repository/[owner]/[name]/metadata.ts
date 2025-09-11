@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { getRepositoryDetailAction } from "@/actions/repository-actions";
+import { getRepositoryInfoAction } from "@/actions/repository-actions";
 
 interface GenerateRepositoryMetadataProps {
   owner: string;
@@ -13,7 +13,7 @@ export async function generateRepositoryMetadata({
   name,
 }: GenerateRepositoryMetadataProps): Promise<Metadata> {
   try {
-    const result = await getRepositoryDetailAction(owner, name);
+    const result = await getRepositoryInfoAction(owner, name);
 
     if (result.error || !result.data) {
       return {

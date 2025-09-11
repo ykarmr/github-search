@@ -53,8 +53,10 @@ export const viewport = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: ReactNode;
+  modal: ReactNode;
 }>) {
   return (
     <MSWMockProvider>
@@ -63,7 +65,10 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
         >
           <Header />
-          <main className="min-h-[calc(100vh-64px)]">{children}</main>
+          <main className="min-h-[calc(100vh-64px)]">
+            {children}
+            {modal}
+          </main>
         </body>
       </html>
     </MSWMockProvider>

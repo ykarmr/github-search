@@ -4,7 +4,9 @@ import { cache } from "react";
 
 import {
   searchRepositories,
-  getRepositoryDetail,
+  getRepositoryInfo,
+  getRepositoryLanguageStats,
+  getRepositoryLatestCommit,
   validateSearchQuery,
   GitHubApiError,
 } from "@/lib/github-api";
@@ -12,7 +14,9 @@ import { logger } from "@/lib/logger";
 import {
   SearchParams,
   SearchRepositoriesResponse,
-  RepositoryDetail,
+  Repository,
+  LanguageStats,
+  LatestCommit,
 } from "@/types/repository";
 
 interface SearchResult {
@@ -20,8 +24,18 @@ interface SearchResult {
   error?: string;
 }
 
-interface RepositoryDetailResult {
-  data?: RepositoryDetail;
+interface RepositoryResult {
+  data?: Repository;
+  error?: string;
+}
+
+interface LanguageStatsResult {
+  data?: LanguageStats;
+  error?: string;
+}
+
+interface LatestCommitResult {
+  data?: LatestCommit[];
   error?: string;
 }
 
@@ -107,12 +121,13 @@ export const searchRepositoriesAction = cache(
   },
 );
 
-export const getRepositoryDetailAction = cache(
-  async (owner: string, repo: string): Promise<RepositoryDetailResult> => {
+// 個別のリポジトリ基本情報取得アクション
+export const getRepositoryInfoAction = cache(
+  async (owner: string, repo: string): Promise<RepositoryResult> => {
     try {
       logger.info(
         { owner, repo },
-        "Getting repository detail: リクエストを受け付けました",
+        "Getting repository info: リクエストを受け付けました",
       );
 
       if (!owner || !repo) {
@@ -121,11 +136,11 @@ export const getRepositoryDetailAction = cache(
         };
       }
 
-      const result = await getRepositoryDetail(owner, repo);
+      const result = await getRepositoryInfo(owner, repo);
 
       logger.info(
         { owner, repo },
-        "Getting repository detail: リクエストが成功しました",
+        "Getting repository info: リクエストが成功しました",
       );
 
       return {
@@ -134,7 +149,7 @@ export const getRepositoryDetailAction = cache(
     } catch (error) {
       logger.error(
         { error },
-        "Getting repository detail: リクエストが失敗しました",
+        "Getting repository info: リクエストが失敗しました",
       );
 
       if (error instanceof GitHubApiError) {
@@ -144,7 +159,95 @@ export const getRepositoryDetailAction = cache(
       }
 
       return {
-        error: "リポジトリの詳細取得中にエラーが発生しました",
+        error: "リポジトリ情報の取得中にエラーが発生しました",
+      };
+    }
+  },
+);
+
+// 個別の言語統計取得アクション
+export const getRepositoryLanguageStatsAction = cache(
+  async (owner: string, repo: string): Promise<LanguageStatsResult> => {
+    try {
+      logger.info(
+        { owner, repo },
+        "Getting repository language stats: リクエストを受け付けました",
+      );
+
+      if (!owner || !repo) {
+        return {
+          error: "オーナー名とリポジトリ名が必要です",
+        };
+      }
+
+      const result = await getRepositoryLanguageStats(owner, repo);
+
+      logger.info(
+        { owner, repo },
+        "Getting repository language stats: リクエストが成功しました",
+      );
+
+      return {
+        data: result,
+      };
+    } catch (error) {
+      logger.error(
+        { error },
+        "Getting repository language stats: リクエストが失敗しました",
+      );
+
+      if (error instanceof GitHubApiError) {
+        return {
+          error: error.message,
+        };
+      }
+
+      return {
+        error: "言語統計の取得中にエラーが発生しました",
+      };
+    }
+  },
+);
+
+// 個別の最新コミット取得アクション
+export const getRepositoryLatestCommitAction = cache(
+  async (owner: string, repo: string): Promise<LatestCommitResult> => {
+    try {
+      logger.info(
+        { owner, repo },
+        "Getting repository latest commit: リクエストを受け付けました",
+      );
+
+      if (!owner || !repo) {
+        return {
+          error: "オーナー名とリポジトリ名が必要です",
+        };
+      }
+
+      const result = await getRepositoryLatestCommit(owner, repo);
+
+      logger.info(
+        { owner, repo },
+        "Getting repository latest commit: リクエストが成功しました",
+      );
+
+      return {
+        data: result,
+      };
+    } catch (error) {
+      logger.error(
+        { error },
+        "Getting repository latest commit: リクエストが失敗しました",
+      );
+
+      if (error instanceof GitHubApiError) {
+        return {
+          error: error.message,
+        };
+      }
+
+      return {
+        error: "最新コミットの取得中にエラーが発生しました",
       };
     }
   },

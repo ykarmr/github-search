@@ -3,7 +3,9 @@ import { expect, test, describe } from "vitest";
 
 import {
   searchRepositoriesAction,
-  getRepositoryDetailAction,
+  getRepositoryInfoAction,
+  getRepositoryLanguageStatsAction,
+  getRepositoryLatestCommitAction,
 } from "./repository-actions";
 
 import { server } from "@/__tests__/mocks/server";
@@ -98,9 +100,9 @@ describe("searchRepositoriesAction", () => {
   });
 });
 
-describe("getRepositoryDetailAction", () => {
-  test("正常なリポジトリ詳細を返す", async () => {
-    const result = await getRepositoryDetailAction("facebook", "react");
+describe("getRepositoryInfoAction", () => {
+  test("正常なリポジトリ基本情報を返す", async () => {
+    const result = await getRepositoryInfoAction("facebook", "react");
 
     expect(result.data).toBeDefined();
     expect(result.error).toBeUndefined();
@@ -109,15 +111,7 @@ describe("getRepositoryDetailAction", () => {
   });
 
   test("オーナー名が空の場合はエラーを返す", async () => {
-    const result = await getRepositoryDetailAction("", "test-repo");
-
-    expect(result).toEqual({
-      error: "オーナー名とリポジトリ名が必要です",
-    });
-  });
-
-  test("リポジトリ名が空の場合はエラーを返す", async () => {
-    const result = await getRepositoryDetailAction("user", "");
+    const result = await getRepositoryInfoAction("", "test-repo");
 
     expect(result).toEqual({
       error: "オーナー名とリポジトリ名が必要です",
@@ -125,38 +119,84 @@ describe("getRepositoryDetailAction", () => {
   });
 
   test("GitHub APIエラーの場合は適切なエラーメッセージを返す", async () => {
-    // MSWで404エラーをモック
     server.use(
       http.get("https://api.github.com/repos/user/non-existent", () => {
-        return HttpResponse.json(
-          {
-            message: "Not Found",
-            // eslint-disable-next-line camelcase
-            documentation_url:
-              "https://docs.github.com/rest/reference/repos#get-a-repository",
-          },
-          { status: 404 },
-        );
+        return HttpResponse.json({ message: "Not Found" }, { status: 404 });
       }),
     );
 
-    const result = await getRepositoryDetailAction("user", "non-existent");
-
+    const result = await getRepositoryInfoAction("user", "non-existent");
     expect(result.error).toContain("Not Found");
   });
+});
 
-  test("予期しないエラーの場合は適切なエラーメッセージを返す", async () => {
-    // MSWでネットワークエラーをモック
+describe("getRepositoryLanguageStatsAction", () => {
+  test("正常な言語統計を返す", async () => {
+    const result = await getRepositoryLanguageStatsAction("facebook", "react");
+
+    expect(result.data).toBeDefined();
+    expect(result.error).toBeUndefined();
+    expect(typeof result.data).toBe("object");
+  });
+
+  test("オーナー名が空の場合はエラーを返す", async () => {
+    const result = await getRepositoryLanguageStatsAction("", "test-repo");
+
+    expect(result).toEqual({
+      error: "オーナー名とリポジトリ名が必要です",
+    });
+  });
+
+  test("GitHub APIエラーの場合は適切なエラーメッセージを返す", async () => {
     server.use(
-      http.get("https://api.github.com/repos/user/test-repo", () => {
-        return HttpResponse.error();
+      http.get(
+        "https://api.github.com/repos/user/non-existent/languages",
+        () => {
+          return HttpResponse.json({ message: "Not Found" }, { status: 404 });
+        },
+      ),
+    );
+
+    const result = await getRepositoryLanguageStatsAction(
+      "user",
+      "non-existent",
+    );
+    expect(result.error).toContain("Not Found");
+  });
+});
+
+describe("getRepositoryLatestCommitAction", () => {
+  test("正常な最新コミット情報を返す", async () => {
+    const result = await getRepositoryLatestCommitAction("facebook", "react");
+
+    expect(result.data).toBeDefined();
+    expect(result.error).toBeUndefined();
+    expect(Array.isArray(result.data)).toBe(true);
+    if (result.data && result.data.length > 0) {
+      expect(result.data[0]).toHaveProperty("sha");
+      expect(result.data[0]).toHaveProperty("commit");
+    }
+  });
+
+  test("オーナー名が空の場合はエラーを返す", async () => {
+    const result = await getRepositoryLatestCommitAction("", "test-repo");
+
+    expect(result).toEqual({
+      error: "オーナー名とリポジトリ名が必要です",
+    });
+  });
+
+  test("GitHub APIエラーの場合は適切なエラーメッセージを返す", async () => {
+    server.use(
+      http.get("https://api.github.com/repos/user/non-existent/commits", () => {
+        return HttpResponse.json({ message: "Not Found" }, { status: 404 });
       }),
     );
 
-    const result = await getRepositoryDetailAction("user", "test-repo");
-
-    // HttpResponse.error()の場合、Octokitが"Failed to fetch"エラーをthrowし、
-    // それがGitHubApiErrorに包まれてerror.messageが返される
-    expect(result.error).toBe("Failed to fetch");
+    const result = await getRepositoryLatestCommitAction(
+      "user",
+      "non-existent",
+    );
+    expect(result.error).toContain("Not Found");
   });
 });

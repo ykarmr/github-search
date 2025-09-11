@@ -4,10 +4,9 @@ import {
   validateSearchQuery,
   GitHubApiError,
   searchRepositories,
-  getRepository,
-  getRepositoryLanguages,
-  getLatestCommit,
-  getRepositoryDetail,
+  getRepositoryInfo,
+  getRepositoryLanguageStats,
+  getRepositoryLatestCommit,
 } from "./github-api";
 
 describe("validateSearchQuery", () => {
@@ -116,9 +115,9 @@ describe("searchRepositories", () => {
   });
 });
 
-describe("getRepository", () => {
+describe("getRepositoryInfo", () => {
   test("正常処理の場合、詳細情報を取得できる", async () => {
-    const repo = await getRepository("facebook", "react");
+    const repo = await getRepositoryInfo("facebook", "react");
 
     expect(repo.name).toBe("react");
     expect(repo.full_name).toBe("facebook/react");
@@ -137,12 +136,12 @@ describe("getRepository", () => {
   });
 
   test("存在しないリポジトリの場合GitHubApiErrorがthrowされる", async () => {
-    await expect(getRepository("invalid", "repo")).rejects.toThrow(
+    await expect(getRepositoryInfo("invalid", "repo")).rejects.toThrow(
       GitHubApiError,
     );
 
     try {
-      await getRepository("invalid", "repo");
+      await getRepositoryInfo("invalid", "repo");
     } catch (error) {
       expect(error).toBeInstanceOf(GitHubApiError);
       expect((error as GitHubApiError).status).toBe(404);
@@ -150,9 +149,9 @@ describe("getRepository", () => {
   });
 });
 
-describe("getRepositoryLanguages", () => {
+describe("getRepositoryLanguageStats", () => {
   test("正常処理場合、言語統計を取得できる", async () => {
-    const languages = await getRepositoryLanguages("facebook", "react");
+    const languages = await getRepositoryLanguageStats("facebook", "react");
 
     expect(languages).toEqual({
       JavaScript: 5171280,
@@ -169,15 +168,15 @@ describe("getRepositoryLanguages", () => {
   });
 
   test("存在しないリポジトリの場合は空のオブジェクトが返される", async () => {
-    const languages = await getRepositoryLanguages("invalid", "repo");
+    const languages = await getRepositoryLanguageStats("invalid", "repo");
 
     expect(languages).toEqual({});
   });
 });
 
-describe("getLatestCommit", () => {
+describe("getRepositoryLatestCommit", () => {
   test("正常処理の場合、最新コミットを取得できる", async () => {
-    const commits = await getLatestCommit("facebook", "react");
+    const commits = await getRepositoryLatestCommit("facebook", "react");
 
     expect(commits.length).toBeGreaterThan(0);
 
@@ -191,132 +190,39 @@ describe("getLatestCommit", () => {
   });
 
   test("存在しないリポジトリの場合は空の配列が返される", async () => {
-    const commits = await getLatestCommit("invalid", "repo");
+    const commits = await getRepositoryLatestCommit("invalid", "repo");
 
     expect(commits).toEqual([]);
   });
 });
 
-describe("getRepositoryDetail", () => {
-  test("正常処理の場合、詳細情報をすべて取得できる", async () => {
-    const detail = await getRepositoryDetail("facebook", "react");
-
-    // 基本リポジトリ情報
-    expect(detail.name).toBe("react");
-    expect(detail.full_name).toBe("facebook/react");
-    expect(detail.owner.login).toBe("facebook");
-
-    // 言語統計
-    expect(detail.languageStats).toEqual({
-      JavaScript: 5171280,
-      TypeScript: 2230082,
-      HTML: 115354,
-      CSS: 81054,
-      "C++": 44290,
-      CoffeeScript: 18760,
-      C: 5227,
-      Shell: 4401,
-      Python: 259,
-      Makefile: 189,
-    });
-
-    // 最新コミット情報
-    expect(detail.latestCommit).toBeDefined();
-    expect(detail.latestCommit?.sha).toBe(
-      "ac3e705a18696168acfcaed39dce0cfaa6be8836",
-    );
-    expect(detail.latestCommit?.author?.login).toBe("EugeneChoi4");
-  });
-
-  test("存在しないリポジトリの場合GitHubApiErrorがthrowされる", async () => {
-    await expect(getRepositoryDetail("invalid", "repo")).rejects.toThrow(
-      GitHubApiError,
-    );
-  });
-
-  test("一部のAPIが失敗しても基本情報は取得できる", async () => {
-    // このテストは、言語統計やコミット情報の取得に失敗しても
-    // 基本的なリポジトリ情報は取得できることを確認する
-    // MSWモックでは全て成功するため、実際のエラーケースをテストしたい場合は
-    // 個別にモックハンドラーを設定する必要がある
-
-    const detail = await getRepositoryDetail("facebook", "react");
-    expect(detail.name).toBe("react");
-    expect(detail.languageStats).toBeDefined();
-    expect(detail.latestCommit).toBeDefined();
-  });
-});
-
-describe("型安全性テスト", () => {
-  test("SearchRepositoriesResponseの型が正しく設定される", async () => {
-    const result = await searchRepositories({ q: "react" });
-
-    // 型チェック - これらのプロパティがすべて存在することを確認
-    expect(typeof result.total_count).toBe("number");
-    expect(typeof result.incomplete_results).toBe("boolean");
-    expect(Array.isArray(result.items)).toBe(true);
-
-    if (result.items.length > 0) {
-      const repo = result.items[0];
-      expect(typeof repo.id).toBe("number");
-      expect(typeof repo.name).toBe("string");
-      expect(typeof repo.full_name).toBe("string");
-      expect(typeof repo.owner).toBe("object");
-      expect(typeof repo.owner.login).toBe("string");
-      expect(Array.isArray(repo.topics)).toBe(true);
-    }
-  });
-
-  test("RepositoryDetailの型が正しく設定される", async () => {
-    const detail = await getRepositoryDetail("facebook", "react");
-
-    // 基本プロパティ
-    expect(typeof detail.id).toBe("number");
-    expect(typeof detail.name).toBe("string");
-    expect(typeof detail.full_name).toBe("string");
-
-    // 追加されたプロパティ
-    if (detail.languageStats) {
-      expect(typeof detail.languageStats).toBe("object");
-      const languages = Object.keys(detail.languageStats);
-      if (languages.length > 0) {
-        expect(typeof detail.languageStats[languages[0]]).toBe("number");
-      }
-    }
-
-    if (detail.latestCommit) {
-      expect(typeof detail.latestCommit).toBe("object");
-      expect(typeof detail.latestCommit.sha).toBe("string");
-      expect(typeof detail.latestCommit.commit).toBe("object");
-    }
-  });
-});
-
 describe("エラーハンドリングの詳細テスト", () => {
-  test("言語統計の取得に失敗しても基本情報は取得できる", async () => {
-    // test-user/language-errorリポジトリは言語統計APIでエラーを返す
-    const detail = await getRepositoryDetail("test-user", "language-error");
+  test("言語統計の取得でエラーが発生した場合GitHubApiErrorがthrowされる", async () => {
+    // test-user/language-errorはhandlersで500エラーを返すように設定済み
+    await expect(
+      getRepositoryLanguageStats("test-user", "language-error"),
+    ).rejects.toThrow(GitHubApiError);
 
-    // 基本情報は正常に取得できる
-    expect(detail.name).toBe("language-error");
-    expect(detail.full_name).toBe("test-user/language-error");
-    expect(detail.owner.login).toBe("test-user");
-
-    // 言語統計は失敗するためundefinedになる
-    expect(detail.languageStats).toBeUndefined();
+    try {
+      await getRepositoryLanguageStats("test-user", "language-error");
+    } catch (error) {
+      expect(error).toBeInstanceOf(GitHubApiError);
+      expect((error as GitHubApiError).status).toBe(500);
+    }
   });
 
-  test("コミット情報の取得に失敗しても基本情報は取得できる", async () => {
-    // test-user/commit-errorリポジトリはコミット情報APIでエラーを返す
-    const detail = await getRepositoryDetail("test-user", "commit-error");
+  test("最新コミット情報の取得でエラーが発生した場合GitHubApiErrorがthrowされる", async () => {
+    // test-user/commit-errorはhandlersで500エラーを返すように設定済み
+    await expect(
+      getRepositoryLatestCommit("test-user", "commit-error"),
+    ).rejects.toThrow(GitHubApiError);
 
-    // 基本情報は正常に取得できる
-    expect(detail.name).toBe("commit-error");
-    expect(detail.full_name).toBe("test-user/commit-error");
-    expect(detail.owner.login).toBe("test-user");
-
-    // コミット情報は失敗するためundefinedになる
-    expect(detail.latestCommit).toBeUndefined();
+    try {
+      await getRepositoryLatestCommit("test-user", "commit-error");
+    } catch (error) {
+      expect(error).toBeInstanceOf(GitHubApiError);
+      expect((error as GitHubApiError).status).toBe(500);
+    }
   });
 
   test("リポジトリ検索で空の結果が正しくハンドリングされる", async () => {

@@ -7,7 +7,6 @@ import {
   SearchParams,
   LanguageStats,
   LatestCommit,
-  RepositoryDetail,
   ApiError,
 } from "@/types/repository";
 
@@ -68,7 +67,7 @@ export const searchRepositories = cache(
 );
 
 // 単一リポジトリの詳細取得
-export const getRepository = cache(
+export const getRepositoryInfo = cache(
   async (owner: string, repo: string): Promise<Repository> => {
     try {
       const response = await octokit.rest.repos.get({
@@ -94,7 +93,7 @@ export const getRepository = cache(
 );
 
 // リポジトリの言語統計取得
-export const getRepositoryLanguages = cache(
+export const getRepositoryLanguageStats = cache(
   async (owner: string, repo: string): Promise<LanguageStats> => {
     try {
       const response = await octokit.rest.repos.listLanguages({
@@ -114,7 +113,7 @@ export const getRepositoryLanguages = cache(
 );
 
 // リポジトリの最新コミット取得
-export const getLatestCommit = cache(
+export const getRepositoryLatestCommit = cache(
   async (owner: string, repo: string): Promise<LatestCommit[]> => {
     try {
       const response = await octokit.rest.repos.listCommits({
@@ -134,47 +133,6 @@ export const getLatestCommit = cache(
     }
   },
 );
-
-// リポジトリの詳細情報を取得（全データを結合）
-export async function getRepositoryDetail(
-  owner: string,
-  repo: string,
-): Promise<RepositoryDetail> {
-  try {
-    // 並列で各APIを呼び出し
-    const [repository, languages, commits] = await Promise.allSettled([
-      getRepository(owner, repo),
-      getRepositoryLanguages(owner, repo),
-      getLatestCommit(owner, repo),
-    ]);
-
-    // 基本的なリポジトリ情報は必須
-    if (repository.status === "rejected") {
-      throw repository.reason;
-    }
-
-    const detail: RepositoryDetail = repository.value;
-
-    // 言語統計を追加（失敗しても継続）
-    if (languages.status === "fulfilled") {
-      detail.languageStats = languages.value;
-    }
-
-    // 最新コミット情報を追加（失敗しても継続）
-    if (commits.status === "fulfilled" && commits.value.length > 0) {
-      detail.latestCommit = commits.value[0];
-    }
-
-    return detail;
-  } catch (error) {
-    if (error instanceof GitHubApiError) {
-      throw error;
-    }
-    throw new GitHubApiError(
-      error instanceof Error ? error.message : "Unknown error occurred",
-    );
-  }
-}
 
 // ユーティリティ関数: 検索クエリの検証
 export function validateSearchQuery(query: string): boolean {
