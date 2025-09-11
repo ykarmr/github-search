@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import LanguageChart from "@/components/LanguageChart";
-import StatisticsDisplay from "@/components/StatisticsDisplay";
+import LanguageChart from "@/components/repository/LanguageChart";
+import StatisticsDisplay from "@/components/repository/StatisticsDisplay";
 import BackButton from "@/components/ui/BackButton";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import CopyButton from "@/components/ui/CopyButton";
