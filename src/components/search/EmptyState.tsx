@@ -1,6 +1,6 @@
 export default function EmptyState() {
   return (
-    <div className="text-center py-8 sm:py-12">
+    <div className="text-center py-8 sm:py-12" data-testid="empty-state">
       <div className="text-gray-400 text-4xl sm:text-6xl mb-3 sm:mb-4">🔍</div>
       <h2 className="text-lg sm:text-xl font-semibold text-gray-600 mb-2">
         リポジトリを検索してください

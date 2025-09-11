@@ -4,7 +4,7 @@ interface NoResultsProps {
 
 export default function NoResults({ query }: NoResultsProps) {
   return (
-    <div className="text-center py-8 sm:py-12">
+    <div className="text-center py-8 sm:py-12" data-testid="no-results">
       <div className="text-gray-500 text-base sm:text-lg">
         「{query}」に一致するリポジトリが見つかりませんでした
       </div>

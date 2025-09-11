@@ -14,6 +14,11 @@ export function SectionErrorFallback({
   };
 
   return (
-    <div className={`p-4 rounded-lg ${colorClasses[type]}`}>{message}</div>
+    <div
+      className={`p-4 rounded-lg ${colorClasses[type]}`}
+      data-testid="section-error"
+    >
+      {message}
+    </div>
   );
 }

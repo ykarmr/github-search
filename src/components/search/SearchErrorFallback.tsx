@@ -9,7 +9,10 @@ export default function SearchErrorFallback({
   error,
 }: SearchErrorFallbackProps) {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 sm:mb-6">
+    <div
+      className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 sm:mb-6"
+      data-testid="search-error"
+    >
       <div className="flex items-center">
         <div className="flex-shrink-0">
           <svg
@@ -32,6 +35,7 @@ export default function SearchErrorFallback({
             return window.location.reload();
           }}
           className="ml-4 px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+          data-testid="retry-button"
         >
           再試行
         </button>

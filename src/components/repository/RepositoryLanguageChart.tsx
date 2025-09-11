@@ -23,7 +23,10 @@ export async function RepositoryLanguageChart({
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div
+      className="bg-white border border-gray-200 rounded-lg p-6"
+      data-testid="language-chart"
+    >
       <h2 className="text-lg font-semibold text-gray-900 mb-4">言語統計</h2>
       <LanguageChart languages={result.data} />
     </div>

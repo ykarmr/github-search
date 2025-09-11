@@ -30,7 +30,10 @@ export async function RepositoryInfo({ owner, name }: RepositoryInfoProps) {
           unoptimized
         />
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1
+            className="text-2xl font-bold text-gray-900 mb-2"
+            data-testid="repository-name"
+          >
             {repository.full_name}
           </h1>
           {repository.description && (
@@ -39,26 +42,41 @@ export async function RepositoryInfo({ owner, name }: RepositoryInfoProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="text-center p-4 bg-gray-50 rounded-lg">
+      <div
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
+        data-testid="repository-statistics"
+      >
+        <div
+          className="text-center p-4 bg-gray-50 rounded-lg"
+          data-testid="repository-stars"
+        >
           <div className="text-2xl font-bold text-gray-900">
             {formatNumber(repository.stargazers_count)}
           </div>
           <div className="text-sm text-gray-600">Stars</div>
         </div>
-        <div className="text-center p-4 bg-gray-50 rounded-lg">
+        <div
+          className="text-center p-4 bg-gray-50 rounded-lg"
+          data-testid="repository-forks"
+        >
           <div className="text-2xl font-bold text-gray-900">
             {formatNumber(repository.forks_count)}
           </div>
           <div className="text-sm text-gray-600">Forks</div>
         </div>
-        <div className="text-center p-4 bg-gray-50 rounded-lg">
+        <div
+          className="text-center p-4 bg-gray-50 rounded-lg"
+          data-testid="repository-watchers"
+        >
           <div className="text-2xl font-bold text-gray-900">
             {formatNumber(repository.watchers_count)}
           </div>
           <div className="text-sm text-gray-600">Watchers</div>
         </div>
-        <div className="text-center p-4 bg-gray-50 rounded-lg">
+        <div
+          className="text-center p-4 bg-gray-50 rounded-lg"
+          data-testid="repository-issues"
+        >
           <div className="text-2xl font-bold text-gray-900">
             {formatNumber(repository.open_issues_count)}
           </div>
