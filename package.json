@@ -6,7 +6,7 @@
     "dev": "next dev",
     "dev:mock": "NEXT_PUBLIC_API_MOCKING=enabled pnpm dev",
     "build": "next build",
-    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm start",
+    "start": "pnpm next start",
     "lint": "pnpm lint:typecheck && pnpm lint:eslint && pnpm lint:prettier",
     "lint:typecheck": "tsc",
     "lint:eslint": "eslint './**/*.{ts,tsx}'",

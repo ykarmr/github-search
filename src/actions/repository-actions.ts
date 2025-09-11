@@ -1,6 +1,6 @@
 "use server";
 
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
 import {
   searchRepositories,
@@ -39,7 +39,7 @@ interface LatestCommitResult {
   error?: string;
 }
 
-export const searchRepositoriesAction = cache(
+export const searchRepositoriesAction = unstable_cache(
   async (
     query: string,
     sort: "stars" | "forks" | "help-wanted-issues" | "updated" = "stars",
@@ -119,10 +119,14 @@ export const searchRepositoriesAction = cache(
       };
     }
   },
+  ["query", "sort", "order", "perPage", "page"],
+  {
+    revalidate: 600, // 10分ごとに再検証する
+  },
 );
 
 // 個別のリポジトリ基本情報取得アクション
-export const getRepositoryInfoAction = cache(
+export const getRepositoryInfoAction = unstable_cache(
   async (owner: string, repo: string): Promise<RepositoryResult> => {
     try {
       logger.info(
@@ -163,10 +167,14 @@ export const getRepositoryInfoAction = cache(
       };
     }
   },
+  ["owner", "repo"],
+  {
+    revalidate: 600,
+  },
 );
 
 // 個別の言語統計取得アクション
-export const getRepositoryLanguageStatsAction = cache(
+export const getRepositoryLanguageStatsAction = unstable_cache(
   async (owner: string, repo: string): Promise<LanguageStatsResult> => {
     try {
       logger.info(
@@ -207,10 +215,14 @@ export const getRepositoryLanguageStatsAction = cache(
       };
     }
   },
+  ["owner", "repo"],
+  {
+    revalidate: 600,
+  },
 );
 
 // 個別の最新コミット取得アクション
-export const getRepositoryLatestCommitAction = cache(
+export const getRepositoryLatestCommitAction = unstable_cache(
   async (owner: string, repo: string): Promise<LatestCommitResult> => {
     try {
       logger.info(
@@ -250,5 +262,9 @@ export const getRepositoryLatestCommitAction = cache(
         error: "最新コミットの取得中にエラーが発生しました",
       };
     }
+  },
+  ["owner", "repo"],
+  {
+    revalidate: 600,
   },
 );

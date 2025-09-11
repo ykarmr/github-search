@@ -11,8 +11,6 @@ interface PageProps {
   }>;
 }
 
-export const revalidate = 600; // 10分ごとに再検証する
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
