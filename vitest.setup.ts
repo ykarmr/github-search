@@ -47,3 +47,13 @@ afterEach(() => {
 afterAll(() => {
   server.close();
 });
+
+// unstable_cacheをモック
+vi.mock("next/cache", () => {
+  return {
+    // eslint-disable-next-line camelcase
+    unstable_cache: vi.fn((fn) => {
+      return fn;
+    }),
+  };
+});
