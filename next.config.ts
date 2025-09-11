@@ -4,8 +4,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["@tailwindcss/postcss"],
   },
-
-  output: "standalone",
 };
 
 export default nextConfig;
