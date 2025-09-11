@@ -183,19 +183,53 @@ pnpm start
 - サーバコンポーネントのテスト方法はまだ確立していない認識なので、e2eテストで対応
 - MSWを利用して、APIを実際に利用した状態に寄せたMock環境の構築
 - SuspenseやError Boundaryの活用
-- React cacheを活用したAPIキャッシュ戦略
+- **React cache**を活用したAPIキャッシュ戦略
+  - React 19の`cache`機能を活用してAPIリクエストの重複を防止
+  - 同一のパラメータでの複数回のAPI呼び出しを1回にまとめることで、パフォーマンスを向上
+  - サーバーサイドレンダリング時のリクエスト効率化を実現
 
 ```typescript
 import { cache } from "react";
 
 export const searchRepositories = cache(async (params: SearchParams) => {
-  // GitHub API呼び出し
+  // 同じ検索パラメータでの重複リクエストを防止
+  // 複数のコンポーネントが同じ検索を実行してもAPIは1回のみ呼ばれる
+  const response = await octokit.rest.search.repos(params);
+  return response.data;
 });
 
 export const getRepository = cache(async (owner: string, repo: string) => {
-  // 単一リポジトリ取得
+  // リポジトリ詳細の重複取得を防止
+  // 言語情報やコミット情報と並列実行されても、同じリポジトリデータは1回のみ取得
+  const response = await octokit.rest.repos.get({ owner, repo });
+  return response.data;
 });
 ```
+
+- **unstable_cache**によるServer Actionsのキャッシュ戦略
+  - Next.jsの`unstable_cache`を活用してServer Actionsの結果をキャッシュ
+  - リクエスト間でのデータ永続化により、同一データへの重複API呼び出しを削減
+  - TTL（Time To Live）設定による適切なキャッシュ無効化戦略
+
+```typescript
+import { unstable_cache } from "next/cache";
+
+export const searchRepositoriesAction = unstable_cache(
+  async (query, sort, order, perPage, page) => {
+    // GitHub API呼び出し処理
+    const result = await searchRepositories(params);
+    return { data: result };
+  },
+  ["query", "sort", "order", "perPage", "page"], // キャッシュキー
+  {
+    revalidate: 600, // 10分間キャッシュを保持
+  },
+);
+```
+
+- **階層的なキャッシュ戦略**
+  - React cache（リクエスト内キャッシュ）+ unstable_cache（リクエスト間キャッシュ）の組み合わせ
+  - 短期間での重複リクエスト防止と中期間でのパフォーマンス向上を両立
 
 - 並列処理による詳細情報取得の最適化
 
@@ -220,4 +254,18 @@ logger.error(
   { error: error.message, path },
   "リクエストの処理中にエラーが発生しました",
 );
+```
+
+- **Parallel Routes & Intercept Routes** の活用
+  - モーダルによるリポジトリ詳細表示の実装を検討
+  - URLを保持しながらモーダル表示することで、UXの向上とSEO対策を両立
+  - 現在はシンプルなページ遷移だが、将来的にはIntercepting Routesでモーダル表示への拡張を予定
+
+```typescript
+// 将来的なParallel Routes構造例
+app/
+├── @modal/
+│   └── (.)repository/[owner]/[name]/page.tsx  // Intercepting Route
+├── repository/[owner]/[name]/page.tsx         // 通常ページ
+└── layout.tsx                                 // Parallel Routesレイアウト
 ```
