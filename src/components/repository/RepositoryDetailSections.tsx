@@ -20,7 +20,7 @@ export function RepositoryDetailSections({
   name,
 }: RepositoryDetailSectionsProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* 基本情報 */}
       <ErrorBoundary
         fallback={
@@ -35,7 +35,7 @@ export function RepositoryDetailSections({
             <LoadingFallback
               text="リポジトリ情報を読み込み中..."
               size="lg"
-              className="flex justify-center py-8"
+              className="flex justify-center py-6 sm:py-8"
             />
           }
         >

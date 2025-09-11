@@ -29,10 +29,12 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
 
   return (
     <div className={className}>
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">使用言語</h3>
+      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">
+        使用言語
+      </h3>
 
       {/* 言語の横棒チャート */}
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {languageEntries.map(([language, bytes]) => {
           const percentage = calculatePercentage(bytes, totalBytes);
           const color = getLanguageColor(language);
@@ -43,19 +45,21 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: color }}
                       aria-label={`${language} color indicator`}
                     />
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                       {language}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500">{percentage}%</span>
+                  <span className="text-xs sm:text-sm text-gray-500 ml-2 flex-shrink-0">
+                    {percentage}%
+                  </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
                   <div
-                    className="h-2 rounded-full transition-all duration-300"
+                    className="h-1.5 sm:h-2 rounded-full transition-all duration-300"
                     style={{
                       backgroundColor: color,
                       width: `${percentage}%`,
@@ -74,7 +78,7 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
       </div>
 
       {/* 円グラフ風の表示（オプション） */}
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-4 sm:mt-6 flex flex-wrap gap-1 sm:gap-2">
         {languageEntries.slice(0, 5).map(([language, bytes]) => {
           const percentage = calculatePercentage(bytes, totalBytes);
           const color = getLanguageColor(language);
@@ -85,10 +89,10 @@ export function LanguageChart({ languages, className }: LanguageChartProps) {
               className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full text-xs"
             >
               <div
-                className="w-2 h-2 rounded-full"
+                className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: color }}
               />
-              <span className="text-gray-700">
+              <span className="text-gray-700 truncate max-w-20 sm:max-w-none">
                 {language} {percentage}%
               </span>
             </div>
