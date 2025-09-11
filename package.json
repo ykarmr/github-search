@@ -15,8 +15,7 @@
     "fix:prettier": "prettier --write ./src",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest watch",
-    "test:e2e": "pnpm exec playwright test",
-    "test:e2e:watch": "pnpm exec playwright test --ui",
+    "test:e2e": "pnpm exec playwright test --ui",
     "test": "pnpm test:unit && pnpm test:e2e"
   },
   "dependencies": {
